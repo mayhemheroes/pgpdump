@@ -2,4 +2,4 @@ project: pgpdump
 target: pgpdump
 
 cmds:
-  - cmd: /repo/pgpdump @@
+  - cmd: /install/bin/pgpdump @@
