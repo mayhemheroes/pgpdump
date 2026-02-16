@@ -1,5 +1,5 @@
 AM_CFLAGS = -O -Wall
-EXTRA_DIST =
+EXTRA_DIST = COPYRIGHT
 
 bin_PROGRAMS = pgpdump
 pgpdump_SOURCES = \
