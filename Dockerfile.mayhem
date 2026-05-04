@@ -1,13 +1,15 @@
-FROM --platform=linux/amd64 ubuntu:22.04 as builder
+FROM --platform=linux/amd64 ubuntu:22.04 AS builder
 
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y build-essential autoconf automake libtool zlib1g-dev libbz2-dev
 
 COPY . /repo
 WORKDIR /repo
+RUN echo "0.0.1" > .dist-version && autoreconf -fvi
 RUN ./configure --prefix=/install
 RUN make -j8
 RUN make install
 
-FROM ubuntu:22.04 as package
+FROM ubuntu:22.04 AS package
+RUN apt-get update && apt-get install -y --no-install-recommends zlib1g libbz2-1.0
 COPY --from=builder /install /install
